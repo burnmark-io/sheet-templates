@@ -87,19 +87,45 @@ export interface SheetTemplate {
   labelHeightMm: number;
   labelShape: 'rectangle' | 'round' | 'ellipse';
   cornerRadiusMm?: number;
-  columns: number;        // nx
-  rows: number;           // ny
-  marginTopMm: number;    // y0
-  marginLeftMm: number;   // x0
-  gutterHMm: number;      // dx - labelWidth
-  gutterVMm: number;      // dy - labelHeight
+  layouts: SheetLayout[]; // one or more grid layouts (staggered sheets have two)
   marginMm?: number;      // non-printing margin from Markup-margin
   categories?: string[];  // from Meta elements
 }
+
+export interface SheetLayout {
+  columns: number;        // nx
+  rows: number;           // ny
+  originXMm: number;      // x0
+  originYMm: number;      // y0
+  pitchXMm: number;       // dx
+  pitchYMm: number;       // dy
+}
 ```
+
+**Multi-layout templates:** some sheets (staggered business cards, offset
+grids, certain Avery layouts) have two `<Layout>` elements in the XML.
+The `layouts[]` array captures all of them. For single-layout sheets
+(the common case), `layouts` has one entry.
+
+`exportSheet` in designer-core uses `layouts[0]` by default. The full
+grid for multi-layout rendering needs all entries. The `SheetTemplate`
+type in designer-core must be updated to match this schema.
 
 **Code generation rule:** `${brand}-${part}`, lowercased, spaces replaced
 with hyphens. e.g. `avery-l7160`, `herma-4226`, `uline-s-5765`.
+
+**Convenience getters for single-layout access:**
+
+```typescript
+// For consumers that just need the basic grid
+export function primaryLayout(sheet: SheetTemplate): SheetLayout {
+  return sheet.layouts[0];
+}
+
+// Backwards-compatible flat accessors
+export function columns(sheet: SheetTemplate): number { return sheet.layouts[0].columns; }
+export function rows(sheet: SheetTemplate): number { return sheet.layouts[0].rows; }
+```
 
 ---
 
@@ -217,14 +243,24 @@ Known paper sizes (from glabels `paper-sizes.xml`):
 Templates with `size="Other"` use explicit `width` and `height` attributes.
 Templates with `size="roll"` are continuous media — skip (not sticker sheets).
 
-### 4.4 Gutter Calculation
+### 4.4 Layout Conversion
+
+Each `<Layout>` element becomes a `SheetLayout` entry:
 
 ```typescript
-const gutterHMm = pitchX - labelWidthMm;   // dx - width
-const gutterVMm = pitchY - labelHeightMm;  // dy - height
+const layout: SheetLayout = {
+  columns: parseInt(attrs.nx),
+  rows: parseInt(attrs.ny),
+  originXMm: parseDistance(attrs.x0),
+  originYMm: parseDistance(attrs.y0),
+  pitchXMm: parseDistance(attrs.dx),
+  pitchYMm: parseDistance(attrs.dy),
+};
 ```
 
-If gutter is negative (overlapping labels), clamp to 0.
+Templates with multiple `<Layout>` elements produce multiple entries in
+the `layouts[]` array. The converter preserves all layouts — it does not
+pick one and drop the others.
 
 ### 4.5 Skipped Templates
 
@@ -374,7 +410,9 @@ fallbacks for users who don't install the full registry.
 - Parse a known Avery template XML → verify correct JSON output
 - Unit conversion: `"189pt"` → `66.675mm`, `"1.0in"` → `25.4mm`, `"10mm"` → `10`
 - Paper size resolution: `"A4"` → `210 × 297`, `"US-Letter"` → `215.9 × 279.4`
-- Gutter calculation: verify `dx - width` and `dy - height`
+- Layout conversion: nx/ny/x0/y0/dx/dy mapped correctly to SheetLayout
+- Multi-layout: template with two `<Layout>` elements → `layouts.length === 2`
+- Single layout: `layouts.length === 1`
 - `equiv` resolution: verify clone template inherits properties
 - CD labels skipped with warning
 - Roll media skipped
@@ -394,10 +432,11 @@ fallbacks for users who don't install the full registry.
 - `findByPaper('A4')` returns only A4 templates
 - `listBrands()` returns sorted unique brand list
 - Every template has all required fields (code, brand, part, paperSize, etc.)
+- Every template has at least one layout in `layouts[]`
 - Every code is unique (no duplicates in registry)
 - labelWidthMm > 0 and labelHeightMm > 0 for all templates
-- columns >= 1 and rows >= 1 for all templates
-- marginTopMm >= 0 and marginLeftMm >= 0 for all templates
+- Every layout has columns >= 1 and rows >= 1
+- `primaryLayout()` returns `layouts[0]` for any template
 
 ---
 
@@ -552,4 +591,3 @@ JSON out.
 - **Attribution in README.** Credit glabels-qt and Jaye Evins prominently.
 - **`publishConfig: { access: "public" }`** in package.json.
 - **`pnpm prettier --check`** in CI.
-
