@@ -1,0 +1,6 @@
+node_modules/
+dist/
+coverage/
+upstream/
+pnpm-lock.yaml
+src/templates.json

@@ -1,13 +1,14 @@
 {
-  "extends": "@mbtech-nl/tsconfig",
+  "extends": "@mbtech-nl/tsconfig/node",
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noEmit": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "node_modules", "dist"]
+  "include": [
+    "src/**/*.ts",
+    "scripts/**/*.ts",
+    "vitest.config.ts",
+    "eslint.config.js"
+  ],
+  "exclude": ["node_modules", "dist", "coverage", "upstream"]
 }
