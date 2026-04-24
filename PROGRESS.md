@@ -48,9 +48,18 @@ Tracking the implementation sequence from PLAN.md section 9.
 - [x] Gate: typecheck + lint + format + test + build green; coverage 95.6% stmts / 85.9% branches / 95.8% funcs (all above 90/85/90 thresholds)
 - [x] Commit
 
-## Step 5 — README + final
+## Step 5 — README + final ✅
 
-- [ ] README.md
-- [ ] pnpm test:coverage (verify thresholds)
-- [ ] Verify ci.yml would pass
-- [ ] Commit
+- [x] README.md (usage, data shape, brand list, attribution)
+- [x] pnpm test:coverage — thresholds clear (95.6 / 85.9 / 95.8)
+- [x] Verified ci.yml would pass locally: frozen install, convert + diff,
+      typecheck, lint, prettier check, test:coverage, build — all green
+- [x] Commit
+
+## Final state
+
+1599 templates across 56 brands, 24 multi-layout sheets captured,
+60 tests passing, coverage above thresholds, dist/ emits
+index.js / types.js / templates.json with full d.ts + source maps.
+
+See BLOCKERS.md for the one outstanding item (push to remote).
