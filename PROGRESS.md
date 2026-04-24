@@ -35,11 +35,11 @@ Tracking the implementation sequence from PLAN.md section 9.
 - [x] Gate: converter runs, JSON valid, typecheck/lint/format green
 - [x] Commit
 
-## Step 3 — Package source
+## Step 3 — Package source ✅
 
-- [ ] src/index.ts (SHEETS, findSheet, findByBrand, findBySize, findByPaper, listBrands, primaryLayout)
-- [ ] Gate: typecheck + lint + build
-- [ ] Commit
+- [x] src/index.ts (SHEETS, findSheet, findByBrand, findBySize, findByPaper, listBrands, primaryLayout)
+- [x] Gate: typecheck + lint + build (dist/ emitted, smoke-tested)
+- [x] Commit
 
 ## Step 4 — Tests
 
