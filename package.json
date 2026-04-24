@@ -1,6 +1,6 @@
 {
   "name": "@burnmark-io/sheet-templates",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Sticker sheet template registry — Avery, Herma, Zweckform, and hundreds more",
   "keywords": [
     "labels",
