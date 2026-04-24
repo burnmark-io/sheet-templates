@@ -1,0 +1,73 @@
+{
+  "name": "@burnmark-io/sheet-templates",
+  "version": "0.0.0",
+  "description": "Sticker sheet template registry — Avery, Herma, Zweckform, and hundreds more",
+  "keywords": [
+    "labels",
+    "stickers",
+    "avery",
+    "herma",
+    "zweckform",
+    "sheets",
+    "templates",
+    "burnmark"
+  ],
+  "type": "module",
+  "author": "Mannes Brak",
+  "license": "MIT",
+  "homepage": "https://github.com/burnmark-io/sheet-templates",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/burnmark-io/sheet-templates.git"
+  },
+  "bugs": {
+    "url": "https://github.com/burnmark-io/sheet-templates/issues"
+  },
+  "funding": [
+    { "type": "github", "url": "https://github.com/sponsors/mannes" },
+    { "type": "ko-fi", "url": "https://ko-fi.com/mannes" }
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "LICENSE-GLABELS"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "convert": "tsx scripts/convert.ts",
+    "convert:stats": "tsx scripts/convert.ts --stats",
+    "build": "tsc -p tsconfig.json && cp src/templates.json dist/templates.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src scripts",
+    "format": "prettier --write src scripts"
+  },
+  "prettier": "@mbtech-nl/prettier-config",
+  "dependencies": {},
+  "devDependencies": {
+    "@mbtech-nl/eslint-config": "^1.0.0",
+    "@mbtech-nl/prettier-config": "^1.0.0",
+    "@mbtech-nl/tsconfig": "^1.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "eslint": "^9.0.0",
+    "fast-xml-parser": "^4.0.0",
+    "prettier": "^3.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "~5.5.0",
+    "vitest": "^2.0.0"
+  }
+}
