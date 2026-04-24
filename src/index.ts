@@ -8,33 +8,29 @@ export type { SheetLayout, SheetTemplate };
 export const SHEETS: SheetTemplate[] = templatesData as SheetTemplate[];
 
 export function findSheet(code: string): SheetTemplate | undefined {
-  return SHEETS.find((s) => s.code === code);
+  return SHEETS.find(s => s.code === code);
 }
 
 export function findByBrand(brand: string): SheetTemplate[] {
   const lower = brand.toLowerCase();
-  return SHEETS.filter((s) => s.brand.toLowerCase() === lower);
+  return SHEETS.filter(s => s.brand.toLowerCase() === lower);
 }
 
-export function findBySize(
-  widthMm: number,
-  heightMm: number,
-  toleranceMm = 1,
-): SheetTemplate[] {
+export function findBySize(widthMm: number, heightMm: number, toleranceMm = 1): SheetTemplate[] {
   return SHEETS.filter(
-    (s) =>
+    s =>
       Math.abs(s.labelWidthMm - widthMm) <= toleranceMm &&
       Math.abs(s.labelHeightMm - heightMm) <= toleranceMm,
   );
 }
 
 export function findByPaper(paperSize: string): SheetTemplate[] {
-  return SHEETS.filter((s) => s.paperSize === paperSize);
+  return SHEETS.filter(s => s.paperSize === paperSize);
 }
 
 export function listBrands(): string[] {
-  const brands = new Set(SHEETS.map((s) => s.brand));
-  return [...brands].sort();
+  const brands = new Set(SHEETS.map(s => s.brand));
+  return [...brands].sort((a, b) => a.localeCompare(b));
 }
 
 export function primaryLayout(sheet: SheetTemplate): SheetLayout {

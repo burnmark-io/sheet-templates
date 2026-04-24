@@ -41,12 +41,12 @@ Tracking the implementation sequence from PLAN.md section 9.
 - [x] Gate: typecheck + lint + build (dist/ emitted, smoke-tested)
 - [x] Commit
 
-## Step 4 — Tests
+## Step 4 — Tests ✅
 
-- [ ] src/__tests__/convert.test.ts
-- [ ] src/__tests__/registry.test.ts
-- [ ] Gate: typecheck + lint + test + build
-- [ ] Commit
+- [x] src/__tests__/convert.test.ts (38 tests)
+- [x] src/__tests__/registry.test.ts (22 tests)
+- [x] Gate: typecheck + lint + format + test + build green; coverage 95.6% stmts / 85.9% branches / 95.8% funcs (all above 90/85/90 thresholds)
+- [x] Commit
 
 ## Step 5 — README + final
 

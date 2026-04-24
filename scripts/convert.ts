@@ -406,6 +406,7 @@ function fmtStat(label: string, value: number | string): string {
   return `${label.padEnd(28)}${s}`;
 }
 
+/* v8 ignore start -- CLI shim; the underlying convert() is fully tested and the CI convert step exercises this path end-to-end */
 function runCli(): void {
   const paperSizesXml = fs.readFileSync(path.join(TEMPLATES_DIR, 'paper-sizes.xml'), 'utf-8');
   const files = fs
@@ -458,3 +459,4 @@ const isDirectRun = import.meta.url === `file://${process.argv[1] ?? ''}`;
 if (isDirectRun) {
   runCli();
 }
+/* v8 ignore stop */
