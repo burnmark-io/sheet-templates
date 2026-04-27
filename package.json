@@ -1,6 +1,6 @@
 {
   "name": "@burnmark-io/sheet-templates",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sticker sheet template registry — Avery, Herma, Zweckform, and hundreds more",
   "keywords": [
     "labels",
@@ -23,16 +23,6 @@
   "bugs": {
     "url": "https://github.com/burnmark-io/sheet-templates/issues"
   },
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/mannes"
-    },
-    {
-      "type": "ko-fi",
-      "url": "https://ko-fi.com/mannes"
-    }
-  ],
   "files": [
     "dist",
     "README.md",
